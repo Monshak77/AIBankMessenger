@@ -1,0 +1,75 @@
+
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AIBankMessenger</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-icon">AI</div>
+        <div>
+          <h2>AI Bank</h2>
+          <p>Messenger</p>
+        </div>
+      </div>
+
+      <div class="profile">
+        <div class="avatar my-avatar">A</div>
+        <div>
+          <strong>Менің аккаунтым</strong>
+          <p>Онлайн</p>
+        </div>
+        <span class="online-dot"></span>
+      </div>
+
+      <div class="section-title">
+        <span>Менің чаттарым</span>
+        <span id="chatCount">4</span>
+      </div>
+
+      <input id="searchInput" class="search"
+        type="text" placeholder="Чат іздеу...">
+
+      <div id="chatList" class="chat-list"></div>
+
+      <div class="sidebar-footer">AI Bank · Messenger</div>
+    </aside>
+
+    <main class="chat-panel">
+      <header class="chat-header">
+        <div id="headerAvatar" class="avatar">A</div>
+        <div class="contact-info">
+          <h3 id="contactName">Аружан</h3>
+          <p><span class="online-dot"></span> <span id="contactStatus">Онлайн</span></p>
+        </div>
+        <div class="header-actions">
+          <button id="clearChatBtn" title="Чатты тазалау">Тазалау</button>
+        </div>
+      </header>
+
+      <div class="welcome">
+        <span>🔒</span>
+        AI Bank жеке хабар алмасу жүйесі
+      </div>
+
+      <section id="messages" class="messages"></section>
+
+      <div id="notice" class="notice" aria-live="polite"></div>
+
+      <form id="messageForm" class="message-form">
+        <input id="messageInput" type="text"
+          placeholder="Хабарлама жазыңыз..." autocomplete="off">
+        <button type="submit" class="send-btn">Жіберу ➤</button>
+      </form>
+      <p class="footer-note">AI Bank Messenger · Қарапайым демо-нұсқа</p>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
