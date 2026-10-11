@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="kk">
 <head>
@@ -9,7 +10,256 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+  <style>
+    .popup-panel {
+      position: fixed;
+      z-index: 9999;
+      top: 76px;
+      right: 28px;
+      width: 360px;
+      max-width: calc(100vw - 28px);
+      background: #fff;
+      color: #17233d;
+      border: 1px solid #e6eaf2;
+      border-radius: 18px;
+      box-shadow: 0 18px 55px rgba(15, 30, 60, .18);
+      overflow: hidden;
+      font-family: Inter, sans-serif;
+    }
+
+    .hidden { display: none !important; }
+
+    .popup-heading {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 20px;
+      border-bottom: 1px solid #edf0f5;
+    }
+
+    .popup-heading h3 {
+      margin: 0 0 6px;
+      font-size: 17px;
+    }
+
+    .popup-heading p {
+      margin: 0;
+      font-size: 12px;
+      color: #8490a5;
+    }
+
+    .popup-close {
+      border: 0;
+      background: #f1f4f9;
+      border-radius: 9px;
+      width: 30px;
+      height: 30px;
+      cursor: pointer;
+      font-size: 22px;
+      color: #58657b;
+    }
+
+    .notification-item {
+      display: flex;
+      gap: 12px;
+      padding: 16px 20px;
+      border-bottom: 1px solid #f0f2f7;
+    }
+
+    .notification-item:hover,
+    .profile-menu-item:hover {
+      background: #f7f9fd;
+    }
+
+    .notification-item b {
+      font-size: 13px;
+    }
+
+    .notification-item p {
+      font-size: 12px;
+      line-height: 1.5;
+      margin: 5px 0;
+      color: #68758c;
+    }
+
+    .notification-item small {
+      font-size: 10px;
+      color: #9aa4b5;
+    }
+
+    .popup-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      display: flex;
+      flex-shrink: 0;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .blue-icon { background: #eaf0ff; color: #4169db; }
+    .green-icon { background: #e5f8ef; color: #1d9a68; }
+    .orange-icon { background: #fff0df; color: #e28b27; }
+
+    .popup-main-button {
+      width: calc(100% - 32px);
+      margin: 16px;
+      padding: 12px;
+      border: 0;
+      border-radius: 10px;
+      background: #4169db;
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .popup-main-button:hover { background: #3155c3; }
+
+    .bank-profile-menu {
+      width: 300px;
+      top: 76px;
+    }
+
+    .profile-menu-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 20px;
+    }
+
+    .profile-menu-header .profile-avatar {
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      border-radius: 50%;
+      background: #e8edff;
+      color: #365aca;
+      font-weight: 800;
+    }
+
+    .profile-menu-header b,
+    .profile-menu-header small,
+    .profile-online {
+      display: block;
+    }
+
+    .profile-menu-header b { font-size: 14px; }
+    .profile-menu-header small {
+      color: #7e899d;
+      font-size: 11px;
+      margin-top: 4px;
+      overflow-wrap: anywhere;
+    }
+
+    .profile-online {
+      color: #229968;
+      font-size: 11px;
+      margin-top: 7px;
+    }
+
+    .profile-menu-divider {
+      border-top: 1px solid #edf0f5;
+    }
+
+    .profile-menu-item {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 20px;
+      border: 0;
+      background: white;
+      text-align: left;
+      cursor: pointer;
+      color: #26334c;
+      font-size: 13px;
+    }
+
+    .profile-menu-item > i:first-child {
+      width: 18px;
+      color: #64748b;
+    }
+
+    .menu-arrow { margin-left: auto; font-size: 10px; color: #9aa4b5; }
+
+    .profile-menu-item.logout { color: #d94b52; }
+    .profile-menu-item.logout > i:first-child { color: #d94b52; }
+
+    .bank-modal-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      background: rgba(12, 22, 43, .48);
+    }
+
+    .bank-modal {
+      width: 410px;
+      max-width: 100%;
+      padding: 25px;
+      border-radius: 18px;
+      background: white;
+      color: #17233d;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, .2);
+      font-family: Inter, sans-serif;
+    }
+
+    .bank-modal h3 { margin: 0 0 8px; }
+    .bank-modal p { color: #7e899d; font-size: 13px; line-height: 1.5; }
+
+    .bank-modal label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      margin: 15px 0 7px;
+    }
+
+    .bank-modal input {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 12px;
+      border: 1px solid #dfe5ef;
+      border-radius: 10px;
+      outline: none;
+      font: inherit;
+    }
+
+    .bank-modal input:focus { border-color: #4169db; }
+
+    .modal-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .modal-actions button {
+      flex: 1;
+      padding: 12px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .modal-cancel { border: 1px solid #dfe5ef; background: white; color: #344054; }
+    .modal-save { border: 0; background: #4169db; color: white; }
+
+    .top-profile { cursor: pointer; }
+    .notification-button { position: relative; }
+
+    @media (max-width: 480px) {
+      .popup-panel { right: 10px; top: 65px; }
+    }
+  </style>
 </head>
+
 <body>
 <div class="app-shell">
 
@@ -27,7 +277,7 @@
 
     <div class="side-label">НЕГІЗГІ МӘЗІР</div>
     <nav class="main-nav">
-      <button class="nav-item active" data-view="chats"><i class="fa-regular fa-comments"></i><span>Барлық чаттар</span><b id="navChatCount">10</b></button>
+      <button class="nav-item active" data-view="chats"><i class="fa-regular fa-comments"></i><span>Барлық чаттар</span><b id="navChatCount">20</b></button>
       <button class="nav-item" data-view="unread"><i class="fa-regular fa-envelope"></i><span>Оқылмаған</span></button>
       <button class="nav-item" data-view="pinned"><i class="fa-solid fa-thumbtack"></i><span>Бекітілген</span></button>
       <button class="nav-item" data-view="files"><i class="fa-regular fa-folder-open"></i><span>Файлдар</span></button>
@@ -45,7 +295,7 @@
 
     <div class="sidebar-bottom">
       <div class="security-note"><i class="fa-solid fa-shield-halved"></i><div><b>Қауіпсіз жұмыс</b><small>Командалық байланыс</small></div><span class="online-dot"></span></div>
-      <button class="profile-button" id="profileBtn">
+      <button class="profile-button" id="profileBtn" type="button">
         <span class="profile-avatar">AA</span>
         <span class="profile-copy"><b>Әкімші Акмарал</b><small><span class="online-dot"></span> Желіде</small></span>
         <i class="fa-solid fa-ellipsis"></i>
@@ -58,8 +308,14 @@
       <div class="breadcrumb"><span>AI Bank</span><i class="fa-solid fa-chevron-right"></i><b>Messenger</b></div>
       <div class="top-actions">
         <div class="secure-label"><i class="fa-solid fa-lock"></i> Ішкі байланыс</div>
-        <button class="icon-button notification-button" id="notificationBtn" title="Хабарландырулар"><i class="fa-regular fa-bell"></i><span class="notification-dot"></span></button>
-        <div class="top-profile"><span class="profile-avatar">AA</span><div><b>Акмарал</b><small>Әкімші</small></div><i class="fa-solid fa-chevron-down"></i></div>
+        <button class="icon-button notification-button" id="notificationBtn" type="button" title="Хабарландырулар" aria-label="Хабарландырулар">
+          <i class="fa-regular fa-bell"></i><span class="notification-dot" id="notificationDot"></span>
+        </button>
+        <button class="top-profile" id="profileButton" type="button" style="display:flex;align-items:center;gap:10px;border:0;background:transparent;color:inherit;font:inherit;text-align:left;">
+          <span class="profile-avatar">AA</span>
+          <span><b id="topProfileName">Акмарал</b><small style="display:block">Әкімші</small></span>
+          <i class="fa-solid fa-chevron-down"></i>
+        </button>
       </div>
     </header>
 
@@ -69,8 +325,8 @@
     </section>
 
     <section class="stats-row">
-      <div class="stat-card"><span class="stat-icon stat-blue"><i class="fa-regular fa-comments"></i></span><div><small>Барлық чат</small><strong id="statTotal">10</strong><span>Командалық байланыс</span></div></div>
-      <div class="stat-card"><span class="stat-icon stat-orange"><i class="fa-regular fa-envelope"></i></span><div><small>Оқылмаған</small><strong id="statUnread">4</strong><span>Жаңа хабарламалар</span></div></div>
+      <div class="stat-card"><span class="stat-icon stat-blue"><i class="fa-regular fa-comments"></i></span><div><small>Барлық чат</small><strong id="statTotal">20</strong><span>Командалық байланыс</span></div></div>
+      <div class="stat-card"><span class="stat-icon stat-orange"><i class="fa-regular fa-envelope"></i></span><div><small>Оқылмаған</small><strong id="statUnread">5</strong><span>Жаңа хабарламалар</span></div></div>
       <div class="stat-card"><span class="stat-icon stat-green"><i class="fa-solid fa-users"></i></span><div><small>Қызметкерлер</small><strong>24</strong><span>Бірлесіп жұмыс істейміз</span></div></div>
       <div class="stat-card"><span class="stat-icon stat-purple"><i class="fa-solid fa-shield-halved"></i></span><div><small>Жүйе күйі</small><strong class="status-text">Белсенді</strong><span>Демо режимі</span></div></div>
     </section>
@@ -84,7 +340,7 @@
           <button class="filter" data-filter="unread">Оқылмаған</button>
           <button class="filter" data-filter="pinned"><i class="fa-solid fa-thumbtack"></i></button>
         </div>
-        <div class="chat-list-caption"><span>СОҢҒЫ ӘҢГІМЕЛЕР</span><span id="listCount">10 чат</span></div>
+        <div class="chat-list-caption"><span>СОҢҒЫ ӘҢГІМЕЛЕР</span><span id="listCount">20 чат</span></div>
         <div id="chatList" class="chat-list"></div>
         <div class="list-footer"><span class="online-dot"></span> Барлығы синхрондалған <i class="fa-solid fa-check-double"></i></div>
       </aside>
@@ -132,11 +388,168 @@
         <div id="infoContent"></div>
       </aside>
     </section>
+
     <footer class="app-footer"><span>© 2026 AI Bank Messenger</span><span><i class="fa-solid fa-circle-check"></i> Оқу жобасы · Демо режимі</span><span>Design Patterns in JavaScript</span></footer>
   </main>
 </div>
+
+<!-- ХАБАРЛАНДЫРУЛАР -->
+<div id="notificationPanel" class="popup-panel notification-panel hidden">
+  <div class="popup-heading">
+    <div><h3>Хабарландырулар</h3><p>Соңғы жаңалықтар мен ескертулер</p></div>
+    <button id="closeNotifications" class="popup-close" type="button">×</button>
+  </div>
+
+  <div id="notificationList">
+    <div class="notification-item">
+      <span class="popup-icon blue-icon"><i class="fa-solid fa-wallet"></i></span>
+      <div><b>Қаржы бөлімі</b><p>Бүгінгі есепті тексеру қажет.</p><small>10 минут бұрын</small></div>
+    </div>
+    <div class="notification-item">
+      <span class="popup-icon green-icon"><i class="fa-solid fa-users"></i></span>
+      <div><b>Командалық жиналыс</b><p>Ертең сағат 11:00-де жиналыс өтеді.</p><small>30 минут бұрын</small></div>
+    </div>
+    <div class="notification-item">
+      <span class="popup-icon orange-icon"><i class="fa-solid fa-shield-halved"></i></span>
+      <div><b>Қауіпсіздік қызметі</b><p>Жұмыс аккаунтыңыздың қауіпсіздігін сақтаңыз.</p><small>1 сағат бұрын</small></div>
+    </div>
+  </div>
+
+  <button id="markNotificationsRead" class="popup-main-button" type="button">
+    <i class="fa-solid fa-check-double"></i> Барлығын оқылды деп белгілеу
+  </button>
+</div>
+
+
+<div id="profileDropdown" class="popup-panel bank-profile-menu hidden">
+  <div class="profile-menu-header">
+    <div class="profile-avatar" id="dropdownAvatar">AA</div>
+    <div>
+      <b id="dropdownName">Акмарал</b>
+      <small id="dropdownEmail">admin@aibank.kz</small>
+      <span class="profile-online"><span class="online-dot"></span> Желіде</span>
+    </div>
+  </div>
+  <div class="profile-menu-divider"></div>
+
+  <button type="button" class="profile-menu-item" id="myAccountButton">
+    <i class="fa-regular fa-user"></i><span>Менің аккаунтым</span><i class="fa-solid fa-chevron-right menu-arrow"></i>
+  </button>
+  <button type="button" class="profile-menu-item" id="addAccountButton">
+    <i class="fa-solid fa-user-plus"></i><span>Аккаунт қосу</span><i class="fa-solid fa-chevron-right menu-arrow"></i>
+  </button>
+  <button type="button" class="profile-menu-item" id="settingsButton">
+    <i class="fa-solid fa-gear"></i><span>Баптаулар</span><i class="fa-solid fa-chevron-right menu-arrow"></i>
+  </button>
+  <div class="profile-menu-divider"></div>
+  <button type="button" class="profile-menu-item logout" id="logoutButton">
+    <i class="fa-solid fa-arrow-right-from-bracket"></i><span>Аккаунттан шығу</span>
+  </button>
+</div>
+
+
+<div id="accountModal" class="bank-modal-overlay hidden">
+  <form id="accountForm" class="bank-modal">
+    <h3 id="accountModalTitle">Менің аккаунтым</h3>
+    <p>Профиль мәліметтерін осы жерден өзгерте аласыз.</p>
+
+    <label for="accountName">Аты-жөніңіз</label>
+    <input id="accountName" name="accountName" required placeholder="Атыңызды енгізіңіз">
+
+    <label for="accountEmail">Email</label>
+    <input id="accountEmail" name="accountEmail" type="email" required placeholder="name@aibank.kz">
+
+    <label id="passwordLabel" class="hidden" for="accountPassword">Құпиясөз</label>
+    <input id="accountPassword" class="hidden" name="accountPassword" type="password" placeholder="Құпиясөз">
+
+    <div class="modal-actions">
+      <button class="modal-cancel" type="button" data-close-modal="accountModal">Болдырмау</button>
+      <button class="modal-save" type="submit">Сақтау</button>
+    </div>
+  </form>
+</div>
+
+
+<div id="logoutModal" class="bank-modal-overlay hidden">
+  <div class="bank-modal">
+    <h3>Аккаунттан шығу</h3>
+    <p>Шынымен аккаунттан шыққыңыз келе ме?</p>
+    <div class="modal-actions">
+      <button class="modal-cancel" id="cancelLogout" type="button">Болдырмау</button>
+      <button class="modal-save" id="confirmLogout" type="button">Шығу</button>
+    </div>
+  </div>
+</div>
+
 <div id="toast" class="toast" role="status"></div>
+
 <script src="script.js"></script>
+<script>
+  
+  const notificationButton = document.getElementById("notificationBtn");
+  const notificationPanel = document.getElementById("notificationPanel");
+  const notificationDot = document.getElementById("notificationDot");
+
+  notificationButton.onclick = function (event) {
+    event.stopPropagation();
+    notificationPanel.classList.toggle("hidden");
+    document.getElementById("profileDropdown").classList.add("hidden");
+  };
+
+  document.getElementById("closeNotifications").onclick = function () {
+    notificationPanel.classList.add("hidden");
+  };
+
+  document.getElementById("markNotificationsRead").onclick = function () {
+    document.querySelectorAll(".notification-item").forEach(item => {
+      item.style.opacity = "0.6";
+    });
+    notificationDot.style.display = "none";
+    document.getElementById("markNotificationsRead").innerHTML =
+      '<i class="fa-solid fa-check"></i> Барлығы оқылды';
+  };
+
+ 
+  function openBankProfile(event) {
+    event.stopPropagation();
+    const menu = document.getElementById("profileDropdown");
+    menu.classList.toggle("hidden");
+    notificationPanel.classList.add("hidden");
+  }
+
+  document.getElementById("profileButton").addEventListener("click", openBankProfile);
+  document.getElementById("profileBtn").addEventListener("click", openBankProfile);
+
+ 
+  notificationPanel.addEventListener("click", event => event.stopPropagation());
+  document.getElementById("profileDropdown").addEventListener("click", event => event.stopPropagation());
+
+ 
+  document.addEventListener("click", function () {
+    notificationPanel.classList.add("hidden");
+    document.getElementById("profileDropdown").classList.add("hidden");
+  });
+
+
+  const originalUpdateProfile = typeof updateProfile === "function" ? updateProfile : null;
+  if (originalUpdateProfile) {
+    const oldUpdateProfile = originalUpdateProfile;
+    // Алғашқы мәндерді көрсету үшін профильдегі ақпаратты оқимыз
+    const savedProfile = localStorage.getItem("aiBankDemoAccount");
+    if (savedProfile) {
+      try {
+        const p = JSON.parse(savedProfile);
+        document.getElementById("topProfileName").textContent = p.name || "Акмарал";
+      } catch (_) {}
+    }
+  }
+
+  
+  document.querySelectorAll(".bank-modal-overlay").forEach(modal => {
+    modal.addEventListener("click", event => {
+      if (event.target === modal) modal.classList.add("hidden");
+    });
+  });
+</script>
 </body>
 </html>
- мине мендеги индекс ашмл
