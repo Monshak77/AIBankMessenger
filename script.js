@@ -1,6 +1,5 @@
+
 "use strict";
-
-
 
 class ChatObserver {
   constructor() {
@@ -18,110 +17,167 @@ class ChatObserver {
 
 const observer = new ChatObserver();
 
-
-
 class ChatService {
   constructor() {
     if (ChatService.instance) return ChatService.instance;
 
     this.currentChatId = 1;
     this.nextId = 100;
+    this.nextMessageId = 1000;
+
     this.chats = [
       {
-        id: 1, name: "IT бөлімі", avatar: "</>", department: "IT бөлімі",
-        status: "12 қызметкер · Жұмыс тобы", unread: 2, pinned: true,
-        messages: [
-          { id: 1, sender: "Бекзат", avatar: "Б", text: "Сервердің жаңартылуы аяқталды. Тестілеуге дайын.", time: "09:12", mine: false, reactions: ["👍 2"] },
-          { id: 2, sender: "Әлихан", avatar: "Ә", text: "Жақсы, қазір тексеріп, нәтижесін жазамын.", time: "09:15", mine: true, reactions: [] },
-          { id: 3, sender: "Данияр", avatar: "Д", text: "API байланысын да тексеруді ұмытпаңыздар. Есеп түске дейін қажет.", time: "09:18", mine: false, reactions: ["✓ 1"] }
+        id: 1, name: "IT бөлімі", avatar: "</>",
+        department: "IT бөлімі", status: "12 қызметкер · Жұмыс тобы",
+        unread: 2, pinned: true, messages: [
+          { sender: "Бекзат", avatar: "Б", text: "Сервердің жаңартылуы аяқталды. Тестілеуге дайын.", time: "09:12" },
+          { sender: "Әлихан", avatar: "Ә", text: "Жақсы, қазір тексеріп, нәтижесін жазамын.", time: "09:15", mine: true },
+          { sender: "Данияр", avatar: "Д", text: "API байланысын да тексеруді ұмытпаңыздар.", time: "09:18" }
         ]
       },
       {
-        id: 2, name: "AI Bank қолдау", avatar: "AI", department: "Клиенттер қызметі",
-        status: "Қолдау қызметі", unread: 3, pinned: true,
-        messages: [
-          { id: 4, sender: "Мадина", avatar: "М", text: "Клиенттердің өтінімдерін өңдеу бойынша жаңартылған нұсқаулық дайын.", time: "09:10", mine: false, reactions: [] },
-          { id: 5, sender: "Мадина", avatar: "М", text: "Жаңа өтінім формасын жұмыс тобына жібердім. Тексеріп шығыңыздар.", time: "09:14", mine: false, reactions: ["👍 3"] }
+        id: 2, name: "AI Bank қолдау", avatar: "AI",
+        department: "Клиенттер қызметі", status: "Қолдау қызметі",
+        unread: 3, pinned: true, messages: [
+          { sender: "Мадина", avatar: "М", text: "Клиенттердің өтінімдерін өңдеу нұсқаулығы дайын.", time: "09:10" },
+          { sender: "Мадина", avatar: "М", text: "Жаңа өтінім формасын тексеріп шығыңыздар.", time: "09:14" }
         ]
       },
       {
-        id: 3, name: "Жоба басқару", avatar: "ЖБ", department: "Басшылық",
-        status: "8 қызметкер · Жоба тобы", unread: 1, pinned: false,
-        messages: [
-          { id: 6, sender: "Данияр", avatar: "Д", text: "AI Bank жүйесінің осы аптадағы жоспарымен танысып шығыңыздар.", time: "08:55", mine: false, reactions: [] },
-          { id: 7, sender: "Әлихан", avatar: "Ә", text: "Жоспарды қарап шықтым. Өз тапсырмаларымды бүгін аяқтаймын.", time: "09:02", mine: true, reactions: [] }
+        id: 3, name: "Жоба басқару", avatar: "ЖБ",
+        department: "Басшылық", status: "8 қызметкер · Жоба тобы",
+        unread: 1, pinned: false, messages: [
+          { sender: "Данияр", avatar: "Д", text: "Осы аптадағы жұмыс жоспарымен танысыңыздар.", time: "08:55" },
+          { sender: "Әлихан", avatar: "Ә", text: "Жоспарды қарап шықтым. Тапсырмаларымды аяқтаймын.", time: "09:02", mine: true }
         ]
       },
       {
-        id: 4, name: "Қаржы бөлімі", avatar: "ҚБ", department: "Қаржы бөлімі",
-        status: "6 қызметкер · Қаржы тобы", unread: 0, pinned: false,
-        messages: [
-          { id: 8, sender: "Салтанат", avatar: "С", text: "Айлық есеп дайын. Соңғы тексеруден кейін басшылыққа жібереміз.", time: "08:48", mine: false, reactions: [] }
+        id: 4, name: "Қаржы бөлімі", avatar: "ҚБ",
+        department: "Қаржы бөлімі", status: "6 қызметкер · Қаржы тобы",
+        unread: 0, pinned: false, messages: [
+          { sender: "Салтанат", avatar: "С", text: "Айлық есеп дайын. Соңғы тексеруден кейін жібереміз.", time: "08:48" }
         ]
       },
       {
-        id: 5, name: "Қауіпсіздік қызметі", avatar: "ҚҚ", department: "Қауіпсіздік",
-        status: "5 қызметкер · Қауіпсіздік", unread: 0, pinned: true,
-        messages: [
-          { id: 9, sender: "Ерлан", avatar: "Е", text: "Қауіпсіздік саясатының жаңартылған талаптары жарияланды. Құжатпен танысуларыңызды сұраймыз.", time: "08:40", mine: false, reactions: [] }
+        id: 5, name: "Қауіпсіздік қызметі", avatar: "ҚҚ",
+        department: "Қауіпсіздік", status: "5 қызметкер · Қауіпсіздік",
+        unread: 0, pinned: true, messages: [
+          { sender: "Ерлан", avatar: "Е", text: "Қауіпсіздік талаптарының жаңартылған нұсқасы жарияланды.", time: "08:40" }
         ]
       },
       {
-        id: 6, name: "Клиенттерге қызмет көрсету", avatar: "КҚ", department: "Клиенттер қызметі",
-        status: "10 қызметкер · Қызмет көрсету", unread: 4, pinned: false,
-        messages: [
-          { id: 10, sender: "Аружан", avatar: "А", text: "Клиенттердің жиі қоятын сұрақтары бойынша жаңа жауап үлгілері дайын.", time: "08:35", mine: false, reactions: [] }
+        id: 6, name: "Клиенттерге қызмет көрсету", avatar: "КҚ",
+        department: "Клиенттер қызметі", status: "10 қызметкер",
+        unread: 4, pinned: false, messages: [
+          { sender: "Аружан", avatar: "А", text: "Жаңа жауап үлгілері дайын.", time: "08:35" }
         ]
       },
       {
-        id: 7, name: "Карталар және төлемдер", avatar: "КТ", department: "Қаржы бөлімі",
-        status: "7 қызметкер · Төлемдер", unread: 0, pinned: false,
-        messages: [
-          { id: 11, sender: "Нұржан", avatar: "Н", text: "Төлем операцияларының тестілеу нәтижелері тіркелді. Қате байқалмады.", time: "Кеше", mine: false, reactions: ["👍 1"] }
+        id: 7, name: "Карталар және төлемдер", avatar: "КТ",
+        department: "Қаржы бөлімі", status: "7 қызметкер · Төлемдер",
+        unread: 0, pinned: false, messages: [
+          { sender: "Нұржан", avatar: "Н", text: "Төлем операциялары тексерілді. Қате байқалмады.", time: "Кеше" }
         ]
       },
       {
-        id: 8, name: "Құжат айналымы", avatar: "ҚА", department: "Әкімшілік",
-        status: "4 қызметкер · Құжаттар", unread: 1, pinned: false,
-        messages: [
-          { id: 12, sender: "Руслан", avatar: "Р", text: "Келісімшарттың соңғы нұсқасы ортақ папкаға жүктелді. Тексеруге жіберілді.", time: "Кеше", mine: false, reactions: [] }
+        id: 8, name: "Құжат айналымы", avatar: "ҚА",
+        department: "Әкімшілік", status: "4 қызметкер · Құжаттар",
+        unread: 1, pinned: false, messages: [
+          { sender: "Руслан", avatar: "Р", text: "Келісімшарт ортақ папкаға жүктелді.", time: "Кеше" }
         ]
       },
       {
-        id: 9, name: "HR және персонал", avatar: "HR", department: "HR",
-        status: "5 қызметкер · Персонал", unread: 0, pinned: false,
-        messages: [
-          { id: 13, sender: "Назерке", avatar: "Н", text: "Қызметкерлердің оқыту кестесі жаңартылды. Ұсыныстарыңызды осы чатқа қалдырыңыздар.", time: "Кеше", mine: false, reactions: [] }
+        id: 9, name: "HR және персонал", avatar: "HR",
+        department: "HR", status: "5 қызметкер · Персонал",
+        unread: 0, pinned: false, messages: [
+          { sender: "Назерке", avatar: "Н", text: "Оқыту кестесі жаңартылды.", time: "Кеше" }
         ]
       },
       {
-        id: 10, name: "Банк жаңалықтары", avatar: "BN", department: "Хабарландырулар",
-        status: "Ресми хабарландырулар", unread: 2, pinned: true,
-        messages: [
-          { id: 14, sender: "Әкімшілік", avatar: "Ә", text: "Жаңа ішкі жұмыс регламенті жарияланды. Барлық бөлім қызметкерлеріне танысу ұсынылады.", time: "Кеше", mine: false, reactions: [] }
+        id: 10, name: "Банк жаңалықтары", avatar: "BN",
+        department: "Хабарландырулар", status: "Ресми хабарландырулар",
+        unread: 2, pinned: true, messages: [
+          { sender: "Әкімшілік", avatar: "Ә", text: "Жаңа жұмыс регламентімен танысуларыңызды сұраймыз.", time: "Кеше" }
         ]
       }
     ];
 
+    this.chats.forEach(chat => {
+      chat.messages.forEach(message => {
+        message.id = this.nextMessageId++;
+        message.reactions ||= [];
+      });
+    });
+
+    this.load();
     ChatService.instance = this;
   }
 
   static getInstance() {
-    if (!ChatService.instance) new ChatService();
-    return ChatService.instance;
+    return ChatService.instance || new ChatService();
   }
 
-  getChats() { return this.chats; }
+  load() {
+    try {
+      const saved = localStorage.getItem("aiBankMessenger");
+      if (!saved) return;
+
+      const data = JSON.parse(saved);
+      if (!Array.isArray(data.chats)) return;
+
+      this.chats = data.chats;
+      this.currentChatId = data.currentChatId || 1;
+      this.nextId = data.nextId || 100;
+      this.nextMessageId = data.nextMessageId || 1000;
+
+      this.chats.forEach(chat => {
+        chat.messages ||= [];
+        chat.messages.forEach(message => {
+          message.reactions ||= [];
+        });
+      });
+
+      if (!this.currentChat()) {
+        this.currentChatId = this.chats[0]?.id || null;
+      }
+    } catch (error) {
+      console.warn("Сақталған деректерді оқу мүмкін болмады.", error);
+    }
+  }
+
+  save() {
+    try {
+      localStorage.setItem("aiBankMessenger", JSON.stringify({
+        chats: this.chats,
+        currentChatId: this.currentChatId,
+        nextId: this.nextId,
+        nextMessageId: this.nextMessageId
+      }));
+    } catch (error) {
+      console.warn("Деректерді сақтау мүмкін болмады.", error);
+    }
+  }
+
+  getChats() {
+    return this.chats;
+  }
 
   currentChat() {
     return this.chats.find(chat => chat.id === this.currentChatId);
   }
 
+  emit(type = "refresh") {
+    this.save();
+    observer.notify({ type });
+  }
+
   selectChat(id) {
     this.currentChatId = id;
     const chat = this.currentChat();
-    if (chat) chat.unread = 0;
-    observer.notify({ type: "refresh" });
+    if (!chat) return;
+
+    chat.unread = 0;
+    this.emit("refresh");
   }
 
   send(text, fileName = "") {
@@ -129,40 +185,44 @@ class ChatService {
     if (!chat) return;
 
     chat.messages.push({
-      id: this.nextId++,
+      id: this.nextMessageId++,
       sender: "Әлихан",
       avatar: "Ә",
       text,
       fileName,
       time: new Date().toLocaleTimeString("kk-KZ", {
-        hour: "2-digit", minute: "2-digit"
+        hour: "2-digit",
+        minute: "2-digit"
       }),
       mine: true,
       reactions: []
     });
 
-    observer.notify({ type: "sent" });
+    this.emit("sent");
   }
 
   deleteMessage(id) {
     const chat = this.currentChat();
     if (!chat) return;
+
     chat.messages = chat.messages.filter(message => message.id !== id);
-    observer.notify({ type: "deleted" });
+    this.emit("deleted");
   }
 
   clearChat() {
     const chat = this.currentChat();
     if (!chat) return;
+
     chat.messages = [];
-    observer.notify({ type: "cleared" });
+    this.emit("cleared");
   }
 
   togglePin() {
     const chat = this.currentChat();
     if (!chat) return;
+
     chat.pinned = !chat.pinned;
-    observer.notify({ type: "refresh" });
+    this.emit("refresh");
   }
 
   addReaction(id) {
@@ -170,28 +230,65 @@ class ChatService {
     const message = chat?.messages.find(item => item.id === id);
     if (!message) return;
 
-    const index = message.reactions.findIndex(r => r.startsWith("👍"));
+    const index = message.reactions.findIndex(item => item.emoji === "👍");
+
     if (index >= 0) {
       message.reactions.splice(index, 1);
     } else {
-      message.reactions.push("👍 1");
+      message.reactions.push({ emoji: "👍", count: 1 });
     }
-    observer.notify({ type: "refresh" });
+
+    this.emit("refresh");
+  }
+
+  addChat(name, department) {
+    const chat = {
+      id: this.nextId++,
+      name,
+      avatar: name.slice(0, 2).toUpperCase(),
+      department,
+      status: "Жаңа жұмыс тобы",
+      unread: 0,
+      pinned: false,
+      messages: []
+    };
+
+    this.chats.unshift(chat);
+    this.currentChatId = chat.id;
+    this.emit("refresh");
   }
 }
 
 
-
 class ChatMediator {
-  constructor(service) { this.service = service; }
-  send(text, file = "") { this.service.send(text, file); }
-  delete(id) { this.service.deleteMessage(id); }
-  open(id) { this.service.selectChat(id); }
-  pin() { this.service.togglePin(); }
-  react(id) { this.service.addReaction(id); }
-  clear() { this.service.clearChat(); }
-}
+  constructor(service) {
+    this.service = service;
+  }
 
+  send(text, file = "") {
+    this.service.send(text, file);
+  }
+
+  delete(id) {
+    this.service.deleteMessage(id);
+  }
+
+  open(id) {
+    this.service.selectChat(id);
+  }
+
+  pin() {
+    this.service.togglePin();
+  }
+
+  react(id) {
+    this.service.addReaction(id);
+  }
+
+  clear() {
+    this.service.clearChat();
+  }
+}
 
 
 class SendCommand {
@@ -200,7 +297,10 @@ class SendCommand {
     this.text = text;
     this.file = file;
   }
-  execute() { this.mediator.send(this.text, this.file); }
+
+  execute() {
+    this.mediator.send(this.text, this.file);
+  }
 }
 
 class DeleteCommand {
@@ -208,12 +308,20 @@ class DeleteCommand {
     this.mediator = mediator;
     this.id = id;
   }
-  execute() { this.mediator.delete(this.id); }
+
+  execute() {
+    this.mediator.delete(this.id);
+  }
 }
 
 class PinCommand {
-  constructor(mediator) { this.mediator = mediator; }
-  execute() { this.mediator.pin(); }
+  constructor(mediator) {
+    this.mediator = mediator;
+  }
+
+  execute() {
+    this.mediator.pin();
+  }
 }
 
 class ReactionCommand {
@@ -221,13 +329,17 @@ class ReactionCommand {
     this.mediator = mediator;
     this.id = id;
   }
-  execute() { this.mediator.react(this.id); }
+
+  execute() {
+    this.mediator.react(this.id);
+  }
 }
+
 
 const service = ChatService.getInstance();
 const mediator = new ChatMediator(service);
-
 const $ = id => document.getElementById(id);
+
 const chatList = $("chatList");
 const messages = $("messages");
 const searchInput = $("searchInput");
@@ -240,25 +352,35 @@ let activeView = "chats";
 let messageSearch = "";
 let toastTimer;
 
+
 function toast(text) {
   const element = $("toast");
   element.textContent = text;
   element.classList.add("show");
+
   clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => element.classList.remove("show"), 2300);
+  toastTimer = setTimeout(() => {
+    element.classList.remove("show");
+  }, 2300);
 }
 
 function escapeText(value) {
-  return String(value).replace(/[&<>"']/g, char => ({
-    "&": "&amp;", "<": "&lt;", ">": "&gt;",
-    '"': "&quot;", "'": "&#39;"
+  return String(value ?? "").replace(/[&<>"']/g, char => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;"
   })[char]);
 }
 
 function lastMessage(chat) {
   const message = chat.messages.at(-1);
   if (!message) return "Хабарлама жоқ";
-  return message.fileName ? "📎 " + message.fileName : message.text;
+
+  return message.fileName
+    ? "📎 " + message.fileName
+    : message.text;
 }
 
 function filteredChats() {
@@ -268,10 +390,14 @@ function filteredChats() {
     const matchesQuery =
       chat.name.toLowerCase().includes(query) ||
       chat.department.toLowerCase().includes(query) ||
-      chat.messages.some(message => message.text.toLowerCase().includes(query));
+      chat.messages.some(message =>
+        (message.text || "").toLowerCase().includes(query) ||
+        (message.fileName || "").toLowerCase().includes(query)
+      );
 
     const matchesDepartment =
-      activeDepartment === "Барлығы" || chat.department === activeDepartment;
+      activeDepartment === "Барлығы" ||
+      chat.department === activeDepartment;
 
     const matchesFilter =
       activeFilter === "all" ||
@@ -281,29 +407,39 @@ function filteredChats() {
     const matchesView =
       activeView === "chats" ||
       (activeView === "pinned" && chat.pinned) ||
-      (activeView === "files" && chat.messages.some(message => message.fileName)) ||
-      (activeView === "announcements" && chat.department === "Хабарландырулар");
+      (activeView === "files" &&
+        chat.messages.some(message => message.fileName)) ||
+      (activeView === "announcements" &&
+        chat.department === "Хабарландырулар");
 
-    return matchesQuery && matchesDepartment && matchesFilter && matchesView;
+    return matchesQuery && matchesDepartment &&
+      matchesFilter && matchesView;
   });
 }
+
 
 function renderChats() {
   const chats = filteredChats();
   chatList.replaceChildren();
 
-  $("chatCount");
-  document.querySelector('[data-view="chats"] b').textContent =
-    service.getChats().length;
+  const chatNavCount = document.querySelector('[data-view="chats"] b');
+  if (chatNavCount) {
+    chatNavCount.textContent = service.getChats().length;
+  }
 
   if (!chats.length) {
-    chatList.innerHTML = '<div class="empty">Сәйкес чат табылмады</div>';
+    const empty = document.createElement("div");
+    empty.className = "empty";
+    empty.textContent = "Сәйкес чат табылмады";
+    chatList.append(empty);
     return;
   }
 
   chats.forEach(chat => {
-    const item = document.createElement("div");
-    item.className = "chat-item" + (chat.id === service.currentChatId ? " active" : "");
+    const item = document.createElement("button");
+    item.type = "button";
+    item.className = "chat-item" +
+      (chat.id === service.currentChatId ? " active" : "");
 
     const avatar = document.createElement("div");
     avatar.className = "avatar";
@@ -324,14 +460,11 @@ function renderChats() {
     meta.className = "chat-meta";
 
     const time = document.createElement("span");
-    time.className = "chat-time";
     time.textContent = chat.messages.at(-1)?.time || "";
-
     meta.append(time);
 
     if (chat.pinned) {
       const pin = document.createElement("span");
-      pin.className = "pin-mark";
       pin.textContent = "★";
       meta.append(pin);
     }
@@ -344,30 +477,39 @@ function renderChats() {
     }
 
     item.append(avatar, details, meta);
-    item.addEventListener("click", () => mediator.open(chat.id));
+    item.addEventListener("click", () => {
+      mediator.open(chat.id);
+    });
+
     chatList.append(item);
   });
 }
 
+
 function renderMessages() {
   const chat = service.currentChat();
-  if (!chat) return;
+  if (!chat) {
+    messages.replaceChildren();
+    return;
+  }
 
   $("contactName").textContent = chat.name;
   $("headerAvatar").textContent = chat.avatar;
   $("contactStatus").textContent = chat.status;
   $("pinChatBtn").textContent = chat.pinned ? "★" : "☆";
-  $("pinChatBtn").title = chat.pinned ? "Бекітуді алып тастау" : "Чатты бекіту";
+  $("pinChatBtn").title = chat.pinned
+    ? "Бекітуді алып тастау"
+    : "Чатты бекіту";
 
   $("chatBanner").querySelector("strong").textContent = chat.name;
   $("chatBanner").querySelector("p").textContent =
-    chat.department + " · Жұмысқа қатысты ақпаратты осы чатта талқылаңыз.";
+    chat.department + " · Жұмыс ақпаратын осы чатта талқылаңыз.";
 
   messages.replaceChildren();
 
   const visibleMessages = chat.messages.filter(message =>
-    message.text.toLowerCase().includes(messageSearch.toLowerCase()) ||
-    (message.fileName || "").toLowerCase().includes(messageSearch.toLowerCase())
+    (message.text || "").toLowerCase().includes(messageSearch) ||
+    (message.fileName || "").toLowerCase().includes(messageSearch)
   );
 
   if (!visibleMessages.length) {
@@ -382,7 +524,9 @@ function renderMessages() {
 
   const divider = document.createElement("div");
   divider.className = "day-divider";
-  divider.innerHTML = "<span>Жұмыс хат алмасуы</span>";
+  divider.textContent = "Жұмыс хат алмасуы";
+  divider.style.cssText =
+    "text-align:center;color:#98a4b5;font-size:10px;margin:4px 0 8px;";
   messages.append(divider);
 
   visibleMessages.forEach(message => {
@@ -390,59 +534,72 @@ function renderMessages() {
     row.className = "message-row" + (message.mine ? " mine" : "");
 
     const avatar = document.createElement("div");
-    avatar.className = "message-avatar";
+    avatar.className = "avatar";
     avatar.textContent = message.avatar;
 
     const content = document.createElement("div");
     content.className = "message-content";
 
     const top = document.createElement("div");
-    top.className = "message-top";
-    top.innerHTML = `<strong>${escapeText(message.sender)}</strong><time>${escapeText(message.time)}</time>`;
+    top.className = "message-name";
+    top.textContent = message.sender + " · " + message.time;
 
     const bubble = document.createElement("div");
-    bubble.className = "bubble";
-    bubble.textContent = message.text;
+    bubble.className = "message-bubble";
+    bubble.textContent = message.text || "";
 
     content.append(top, bubble);
 
     if (message.fileName) {
       const file = document.createElement("div");
       file.className = "file-card";
-      file.innerHTML = `<div class="file-icon">▤</div><div><strong>${escapeText(message.fileName)}</strong><small>Файл тіркелді · Демо-нұсқа</small></div>`;
+      file.style.cssText =
+        "margin-top:8px;padding:10px;background:white;border-radius:10px;overflow-wrap:anywhere;";
+      file.textContent = "📎 " + message.fileName;
       content.append(file);
     }
 
     const bottom = document.createElement("div");
-    bottom.className = "message-bottom";
+    bottom.className = "message-time";
 
-    if (message.reactions.length) {
-      const reaction = document.createElement("span");
-      reaction.className = "message-status";
-      reaction.textContent = message.reactions.join("  ");
-      bottom.append(reaction);
+    if (message.reactions?.length) {
+      const reactions = document.createElement("div");
+      reactions.style.marginBottom = "5px";
+      reactions.textContent = message.reactions.map(reaction =>
+        typeof reaction === "string"
+          ? reaction
+          : reaction.emoji + " " + reaction.count
+      ).join("  ");
+      bottom.append(reactions);
     }
 
     const tools = document.createElement("div");
-    tools.className = "message-tools";
+    tools.style.cssText = "display:flex;gap:8px;justify-content:flex-end;";
 
     const reactBtn = document.createElement("button");
+    reactBtn.type = "button";
     reactBtn.textContent = "👍";
     reactBtn.title = "Реакция қосу";
-    reactBtn.addEventListener("click", () =>
-      new ReactionCommand(mediator, message.id).execute()
-    );
+    reactBtn.style.cssText =
+      "border:0;background:transparent;cursor:pointer;";
+    reactBtn.addEventListener("click", () => {
+      new ReactionCommand(mediator, message.id).execute();
+    });
     tools.append(reactBtn);
 
     if (message.mine) {
       const deleteBtn = document.createElement("button");
+      deleteBtn.type = "button";
       deleteBtn.textContent = "Өшіру";
+      deleteBtn.style.cssText =
+        "border:0;background:transparent;color:#d9534f;cursor:pointer;";
+
       deleteBtn.addEventListener("click", () => {
         if (confirm("Осы хабарламаны өшіресіз бе?")) {
           new DeleteCommand(mediator, message.id).execute();
-          toast("Хабарлама өшірілді");
         }
       });
+
       tools.append(deleteBtn);
     }
 
@@ -455,39 +612,44 @@ function renderMessages() {
   messages.scrollTop = messages.scrollHeight;
 }
 
+
 function renderInfo() {
   const chat = service.currentChat();
   if (!chat) return;
 
-  $("infoContent").innerHTML = `
-    <div class="info-section">
-      <div class="avatar" style="margin-bottom:12px">${escapeText(chat.avatar)}</div>
-      <h4>${escapeText(chat.name)}</h4>
-      <p>${escapeText(chat.status)}</p>
-      <p>Бөлім: ${escapeText(chat.department)}</p>
-    </div>
-    <div class="info-section">
-      <h4>Чат функциялары</h4>
-      <p>★ ${chat.pinned ? "Бекітілген чат" : "Бекітілмеген чат"}</p>
-      <p>Хабарлама саны: ${chat.messages.length}</p>
-      <p>Оқылмаған: ${chat.unread}</p>
-    </div>
-    <div class="info-section">
-      <h4>Қатысушылар</h4>
-      ${["Әлихан", "Данияр", "Аружан", "Бекзат"].map((name, index) =>
-        `<div class="member-row"><div class="avatar">${name[0]}</div><span>${name}${index === 0 ? " (Сіз)" : ""}</span></div>`
-      ).join("")}
-    </div>
-    <div class="info-section">
-      <button id="clearCurrentChat" class="filter">Чатты тазалау</button>
-    </div>`;
+  const info = $("infoContent");
+  info.replaceChildren();
 
-  $("clearCurrentChat").addEventListener("click", () => {
+  const title = document.createElement("h3");
+  title.textContent = chat.name;
+
+  const department = document.createElement("p");
+  department.textContent = "Бөлім: " + chat.department;
+
+  const status = document.createElement("p");
+  status.textContent = chat.status;
+
+  const count = document.createElement("p");
+  count.textContent = "Хабарлама саны: " + chat.messages.length;
+
+  const pinned = document.createElement("p");
+  pinned.textContent = chat.pinned
+    ? "★ Бекітілген чат"
+    : "☆ Бекітілмеген чат";
+
+  const clearButton = document.createElement("button");
+  clearButton.type = "button";
+  clearButton.className = "filter";
+  clearButton.textContent = "Чатты тазалау";
+
+  clearButton.addEventListener("click", () => {
     if (confirm("Осы чаттағы барлық хабарламаны өшіресіз бе?")) {
       mediator.clear();
       toast("Чат тазаланды");
     }
   });
+
+  info.append(title, department, status, count, pinned, clearButton);
 }
 
 
@@ -495,7 +657,9 @@ observer.subscribe(event => {
   renderChats();
   renderMessages();
 
-  if (infoPanel.classList.contains("open")) renderInfo();
+  if (infoPanel.classList.contains("open")) {
+    renderInfo();
+  }
 
   if (event.type === "sent") toast("Хабарлама жіберілді");
   if (event.type === "deleted") toast("Хабарлама өшірілді");
@@ -505,8 +669,8 @@ observer.subscribe(event => {
 
 $("messageForm").addEventListener("submit", event => {
   event.preventDefault();
-  const text = input.value.trim();
 
+  const text = input.value.trim();
   if (!text) {
     toast("Алдымен хабарлама жазыңыз");
     return;
@@ -517,16 +681,24 @@ $("messageForm").addEventListener("submit", event => {
   input.focus();
 });
 
+input.addEventListener("keydown", event => {
+  if (event.key === "Enter" && !event.shiftKey) {
+    event.preventDefault();
+    $("messageForm").requestSubmit();
+  }
+});
+
 
 searchInput.addEventListener("input", renderChats);
 
-document.querySelectorAll(".filter").forEach(button => {
+document.querySelectorAll(".filter[data-filter]").forEach(button => {
   button.addEventListener("click", () => {
-    if (!button.dataset.filter) return;
     activeFilter = button.dataset.filter;
-    document.querySelectorAll(".filter[data-filter]").forEach(item =>
-      item.classList.toggle("active", item === button)
-    );
+
+    document.querySelectorAll(".filter[data-filter]").forEach(item => {
+      item.classList.toggle("active", item === button);
+    });
+
     renderChats();
   });
 });
@@ -534,9 +706,11 @@ document.querySelectorAll(".filter").forEach(button => {
 document.querySelectorAll(".department").forEach(button => {
   button.addEventListener("click", () => {
     activeDepartment = button.dataset.department;
-    document.querySelectorAll(".department").forEach(item =>
-      item.classList.toggle("selected", item === button)
-    );
+
+    document.querySelectorAll(".department").forEach(item => {
+      item.classList.toggle("selected", item === button);
+    });
+
     renderChats();
   });
 });
@@ -547,12 +721,9 @@ document.querySelectorAll(".nav-item").forEach(button => {
     activeView = button.dataset.view;
     activeDepartment = "Барлығы";
 
-    document.querySelectorAll(".nav-item").forEach(item =>
-      item.classList.toggle("active", item === button)
-    );
-    document.querySelectorAll(".department").forEach(item =>
-      item.classList.toggle("selected", item.dataset.department === "Барлығы")
-    );
+    document.querySelectorAll(".nav-item").forEach(item => {
+      item.classList.toggle("active", item === button);
+    });
 
     const titles = {
       chats: "Жұмыс чаттары",
@@ -560,29 +731,36 @@ document.querySelectorAll(".nav-item").forEach(button => {
       files: "Құжаттар мен файлдар",
       announcements: "Банк жаңалықтары"
     };
-    $("listTitle").textContent = titles[activeView];
+
+    $("listTitle").textContent = titles[activeView] || "Жұмыс чаттары";
     renderChats();
   });
 });
 
 
-$("pinChatBtn").addEventListener("click", () =>
-  new PinCommand(mediator).execute()
-);
-
+$("pinChatBtn").addEventListener("click", () => {
+  new PinCommand(mediator).execute();
+  toast(service.currentChat()?.pinned
+    ? "Чат бекітілді"
+    : "Бекіту алынды");
+});
 
 $("chatInfoBtn").addEventListener("click", () => {
   infoPanel.classList.toggle("open");
-  if (infoPanel.classList.contains("open")) renderInfo();
+
+  if (infoPanel.classList.contains("open")) {
+    renderInfo();
+  }
 });
 
-$("closeInfoBtn").addEventListener("click", () =>
-  infoPanel.classList.remove("open")
-);
+$("closeInfoBtn").addEventListener("click", () => {
+  infoPanel.classList.remove("open");
+});
 
 
 $("searchMessagesBtn").addEventListener("click", () => {
   $("searchMessageBar").classList.toggle("hidden");
+
   if ($("searchMessageBar").classList.contains("hidden")) {
     messageSearch = "";
     $("messageSearchInput").value = "";
@@ -612,50 +790,56 @@ document.querySelectorAll("[data-quick]").forEach(button => {
   });
 });
 
-
 $("emojiBtn").addEventListener("click", () => {
-  input.value += " 👍";
+  input.value += " 😊";
   input.focus();
 });
 
-$("attachBtn").addEventListener("click", () => $("fileInput").click());
+
+$("attachBtn").addEventListener("click", () => {
+  $("fileInput").click();
+});
 
 $("fileInput").addEventListener("change", event => {
   const file = event.target.files[0];
   if (!file) return;
 
-  const command = new SendCommand(mediator, "Жұмыс файлы тіркелді:", file.name);
-  command.execute();
+  new SendCommand(mediator, "Файл тіркелді:", file.name).execute();
   event.target.value = "";
-  toast("Файл атауы чатқа қосылды");
 });
 
 
 $("newChatBtn").addEventListener("click", () => {
   const name = prompt("Жаңа жұмыс чатының атауын енгізіңіз:");
-  if (!name || !name.trim()) return;
+  if (!name?.trim()) return;
 
   const chatName = name.trim();
 
-  if (service.chats.some(chat => chat.name.toLowerCase() === chatName.toLowerCase())) {
-    toast("Мұндай чат бар");
+  if (service.chats.some(chat =>
+    chat.name.toLowerCase() === chatName.toLowerCase()
+  )) {
+    toast("Мұндай чат бұрыннан бар");
     return;
   }
 
-  const id = service.nextId++;
-  service.chats.unshift({
-    id,
-    name: chatName,
-    avatar: chatName.slice(0, 2).toUpperCase(),
-    department: activeDepartment === "Барлығы" ? "IT бөлімі" : activeDepartment,
-    status: "Жаңа жұмыс тобы",
-    unread: 0,
-    pinned: false,
-    messages: []
-  });
+  const department = activeDepartment === "Барлығы"
+    ? "IT бөлімі"
+    : activeDepartment;
 
-  mediator.open(id);
-  toast("Жаңа жұмыс чаты құрылды");
+  service.addChat(chatName, department);
+  toast("Жаңа чат құрылды");
+});
+
+
+document.addEventListener("keydown", event => {
+  if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "k") {
+    event.preventDefault();
+    searchInput.focus();
+  }
+
+  if (event.key === "Escape") {
+    infoPanel.classList.remove("open");
+  }
 });
 
 
