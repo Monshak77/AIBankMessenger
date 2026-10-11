@@ -4,139 +4,175 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#101a33">
-  <title>AI Bank — Messenger</title>
+  <meta name="theme-color" content="#075e46">
+  <title>AI Bank Messenger</title>
   <link rel="stylesheet" href="style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 <body>
-<div class="app-shell">
-
-  <aside class="sidebar">
-    <a class="brand" href="#" aria-label="AI Bank басты беті">
-      <span class="brand-icon"><i class="fa-solid fa-landmark"></i></span>
-      <span><b>AI BANK</b><small>MESSENGER</small></span>
+  <header class="topbar">
+    <a class="brand" href="#" aria-label="AI Bank Messenger">
+      <div class="brand-logo">A<span>i</span></div>
+      <div>
+        <div class="brand-name">AI BANK</div>
+        <div class="brand-subtitle">MESSENGER</div>
+      </div>
     </a>
 
-    <div class="workspace">
-      <div class="workspace-logo">A</div>
-      <div class="workspace-text"><b>AI Bank Team</b><small>Корпоративтік орта</small></div>
-      <i class="fa-solid fa-chevron-down"></i>
-    </div>
-
-    <div class="side-label">НЕГІЗГІ МӘЗІР</div>
-    <nav class="main-nav">
-      <button class="nav-item active" data-view="chats"><i class="fa-regular fa-comments"></i><span>Барлық чаттар</span><b id="navChatCount">10</b></button>
-      <button class="nav-item" data-view="unread"><i class="fa-regular fa-envelope"></i><span>Оқылмаған</span></button>
-      <button class="nav-item" data-view="pinned"><i class="fa-solid fa-thumbtack"></i><span>Бекітілген</span></button>
-      <button class="nav-item" data-view="files"><i class="fa-regular fa-folder-open"></i><span>Файлдар</span></button>
-    </nav>
-
-    <div class="side-label department-label">БӨЛІМДЕР <button id="addDepartmentBtn" title="Бөлім туралы">+</button></div>
-    <nav class="main-nav departments">
-      <button class="nav-item department active" data-department="Барлығы"><span class="department-dot all-dot"></span><span>Барлық бөлім</span></button>
-      <button class="nav-item department" data-department="IT бөлімі"><span class="department-dot blue"></span><span>IT бөлімі</span></button>
-      <button class="nav-item department" data-department="Қаржы бөлімі"><span class="department-dot green"></span><span>Қаржы бөлімі</span></button>
-      <button class="nav-item department" data-department="Клиенттер қызметі"><span class="department-dot orange"></span><span>Клиенттер қызметі</span></button>
-      <button class="nav-item department" data-department="Қауіпсіздік"><span class="department-dot red"></span><span>Қауіпсіздік</span></button>
-      <button class="nav-item department" data-department="Хабарландырулар"><span class="department-dot purple"></span><span>Хабарландырулар</span></button>
-    </nav>
-
-    <div class="sidebar-bottom">
-      <div class="security-note"><i class="fa-solid fa-shield-halved"></i><div><b>Қауіпсіз жұмыс</b><small>Командалық байланыс</small></div><span class="online-dot"></span></div>
-      <button class="profile-button" id="profileBtn">
-        <span class="profile-avatar">AA</span>
-        <span class="profile-copy"><b>Әкімші Акмарал</b><small><span class="online-dot"></span> Желіде</small></span>
-        <i class="fa-solid fa-ellipsis"></i>
+    <div class="topbar-right">
+      <div class="secure-label">
+        <span class="secure-dot"></span>
+        Қауіпсіз байланыс
+      </div>
+      <button class="profile-button" id="profileButton" type="button" title="Профиль">
+        <span>👤</span>
       </button>
     </div>
-  </aside>
+  </header>
 
-  <main class="main-area">
-    <header class="topbar">
-      <div class="breadcrumb"><span>AI Bank</span><i class="fa-solid fa-chevron-right"></i><b>Messenger</b></div>
-      <div class="top-actions">
-        <div class="secure-label"><i class="fa-solid fa-lock"></i> Ішкі байланыс</div>
-        <button class="icon-button notification-button" id="notificationBtn" title="Хабарландырулар"><i class="fa-regular fa-bell"></i><span class="notification-dot"></span></button>
-        <div class="top-profile"><span class="profile-avatar">AA</span><div><b>Акмарал</b><small>Әкімші</small></div><i class="fa-solid fa-chevron-down"></i></div>
+  <main class="page">
+    <section class="welcome">
+      <div>
+        <div class="eyebrow">AI BANK · ЖЕКЕ КАБИНЕТ</div>
+        <h1>Хабарламалар</h1>
+        <p>Банкпен байланысудың ыңғайлы әрі қауіпсіз жолы.</p>
       </div>
-    </header>
-
-    <section class="page-heading">
-      <div><div class="eyebrow"><span class="live-pulse"></span> TEAM COMMUNICATION</div><h1>Хабарламалар</h1><p>Командаңызбен бір жерде байланыста болыңыз.</p></div>
-      <button class="primary-button" id="newChatBtn"><i class="fa-solid fa-plus"></i> Жаңа чат</button>
-    </section>
-
-    <section class="stats-row">
-      <div class="stat-card"><span class="stat-icon stat-blue"><i class="fa-regular fa-comments"></i></span><div><small>Барлық чат</small><strong id="statTotal">10</strong><span>Командалық байланыс</span></div></div>
-      <div class="stat-card"><span class="stat-icon stat-orange"><i class="fa-regular fa-envelope"></i></span><div><small>Оқылмаған</small><strong id="statUnread">4</strong><span>Жаңа хабарламалар</span></div></div>
-      <div class="stat-card"><span class="stat-icon stat-green"><i class="fa-solid fa-users"></i></span><div><small>Қызметкерлер</small><strong>24</strong><span>Бірлесіп жұмыс істейміз</span></div></div>
-      <div class="stat-card"><span class="stat-icon stat-purple"><i class="fa-solid fa-shield-halved"></i></span><div><small>Жүйе күйі</small><strong class="status-text">Белсенді</strong><span>Демо режимі</span></div></div>
+      <div class="welcome-icon">✦</div>
     </section>
 
     <section class="messenger-layout">
-      <aside class="chat-list-panel">
-        <div class="panel-heading"><div><h2>Чаттар</h2><p>Командалық сөйлесулер</p></div><button class="icon-button small-icon" id="refreshBtn" title="Жаңарту"><i class="fa-solid fa-rotate"></i></button></div>
-        <label class="search-box"><i class="fa-solid fa-magnifying-glass"></i><input id="searchInput" type="search" placeholder="Чат немесе қызметкер іздеу..."><kbd>⌘ K</kbd></label>
-        <div class="filter-tabs">
-          <button class="filter active" data-filter="all">Барлығы</button>
-          <button class="filter" data-filter="unread">Оқылмаған</button>
-          <button class="filter" data-filter="pinned"><i class="fa-solid fa-thumbtack"></i></button>
+      <aside class="sidebar">
+        <div class="sidebar-heading">
+          <div>
+            <h2>Чаттар</h2>
+            <span class="muted" id="chatCount">12 байланыс</span>
+          </div>
+          <button class="icon-button" id="newChatButton" type="button" title="Жаңа чат">＋</button>
         </div>
-        <div class="chat-list-caption"><span>СОҢҒЫ ӘҢГІМЕЛЕР</span><span id="listCount">10 чат</span></div>
-        <div id="chatList" class="chat-list"></div>
-        <div class="list-footer"><span class="online-dot"></span> Барлығы синхрондалған <i class="fa-solid fa-check-double"></i></div>
+
+        <label class="search-box">
+          <span>⌕</span>
+          <input id="chatSearch" type="search"
+            placeholder="Чаттарды іздеу..."
+            autocomplete="off">
+          <kbd>⌘ K</kbd>
+        </label>
+
+        <div class="filter-row">
+          <button class="filter-button active" data-filter="all" type="button">Барлығы</button>
+          <button class="filter-button" data-filter="unread" type="button">
+            Оқылмаған <span id="unreadFilterCount">0</span>
+          </button>
+        </div>
+
+        <div class="chat-list" id="chatList"></div>
+
+        <div class="sidebar-footer">
+          <span class="online-dot"></span>
+          <span>Банк қызметтері онлайн</span>
+          <span class="footer-shield">♧</span>
+        </div>
       </aside>
 
-      <section class="conversation">
-        <div id="conversationHeader" class="conversation-header">
-          <div class="conversation-person">
-            <div id="headerAvatar" class="avatar avatar-blue">IT</div>
-            <div class="conversation-title"><h2 id="headerName">IT бөлімі</h2><p id="headerStatus"><span class="online-dot"></span> Командалық чат</p></div>
-          </div>
-          <div class="conversation-actions">
-            <button class="icon-button" id="searchMessagesBtn" title="Хабарламадан іздеу"><i class="fa-solid fa-magnifying-glass"></i></button>
-            <button class="icon-button" id="pinChatBtn" title="Чатты бекіту"><i class="fa-solid fa-thumbtack"></i></button>
-            <button class="icon-button" id="chatInfoBtn" title="Чат туралы"><i class="fa-solid fa-circle-info"></i></button>
-          </div>
+      <section class="conversation" aria-label="Хабарламалар чаты">
+        <div class="empty-state" id="emptyState">
+          <div class="empty-illustration">✉</div>
+          <h2>Чатты таңдаңыз</h2>
+          <p>Сөйлесуді бастау үшін сол жақтағы чаттардың бірін таңдаңыз.</p>
         </div>
 
-        <div id="chatBanner" class="chat-banner"><i class="fa-solid fa-shield-halved"></i><span>Жұмысқа қатысты ақпаратты осы чатта бөлісіңіз.</span><button id="closeBannerBtn" title="Жабу">×</button></div>
+        <div class="active-chat hidden" id="activeChat">
+          <header class="conversation-header">
+            <div class="contact-info">
+              <div class="avatar large" id="activeAvatar"></div>
+              <div class="contact-text">
+                <h2 id="activeName"></h2>
+                <div class="contact-status" id="activeStatus">
+                  <span class="online-dot"></span> Онлайн
+                </div>
+              </div>
+            </div>
+            <div class="header-actions">
+              <button class="icon-button" id="searchToggle" type="button" title="Хабарламадан іздеу">⌕</button>
+              <button class="icon-button" id="chatInfoButton" type="button" title="Чат ақпараты">ⓘ</button>
+            </div>
+          </header>
 
-        <div id="searchMessageBar" class="search-message-bar hidden"><i class="fa-solid fa-magnifying-glass"></i><input id="messageSearchInput" type="search" placeholder="Осы чаттан хабарлама іздеу..."><button id="closeMessageSearch" title="Іздеуді жабу">×</button></div>
-
-        <div id="messages" class="messages-area" aria-live="polite"></div>
-
-        <div class="quick-replies">
-          <span>Жылдам жауап:</span>
-          <button data-quick="Жақсы, қабылдадым.">Қабылдадым</button>
-          <button data-quick="Қазір тексеріп, хабарлаймын.">Тексеремін</button>
-          <button data-quick="Рақмет!">Рақмет</button>
-        </div>
-
-        <form id="messageForm" class="composer">
-          <div class="composer-tools">
-            <button type="button" id="attachBtn" class="tool-button" title="Файл тіркеу"><i class="fa-solid fa-paperclip"></i></button>
-            <button type="button" id="emojiBtn" class="tool-button" title="Эмодзи"><i class="fa-regular fa-face-smile"></i></button>
-            <input type="file" id="fileInput" class="hidden" accept=".pdf,.doc,.docx,.xls,.xlsx,.png,.jpg,.jpeg,.txt">
-            <span class="composer-hint">Enter — жіберу · Shift+Enter — жаңа жол</span>
+          <div class="chat-banner">
+            <div class="banner-icon">🛡️</div>
+            <div>
+              <strong>Қауіпсіз байланыс</strong>
+              <p>Жеке деректеріңізді ешкімге бермеңіз.</p>
+            </div>
+            <span class="banner-check">✓</span>
           </div>
-          <div class="composer-input-row"><textarea id="messageInput" rows="1" placeholder="Хабарлама жазыңыз..." aria-label="Хабарлама"></textarea><button class="send-button" type="submit" title="Жіберу"><i class="fa-solid fa-paper-plane"></i><span>Жіберу</span></button></div>
-          <div class="composer-bottom"><span><i class="fa-solid fa-lock"></i> Ішкі демо-чат</span><span id="charCount">0 / 2000</span></div>
-        </form>
+
+          <div class="message-search hidden" id="messageSearchBar">
+            <input id="messageSearch" type="search" placeholder="Осы чаттан іздеу...">
+            <button id="closeMessageSearch" type="button">✕</button>
+          </div>
+
+          <div class="date-divider"><span>ХАБАРЛАМАЛАР</span></div>
+
+          <div class="messages-area" id="messages" aria-live="polite"></div>
+
+          <div class="quick-replies" id="quickReplies">
+            <button type="button" data-reply="Сәлеметсіз бе!">Сәлеметсіз бе!</button>
+            <button type="button" data-reply="Толығырақ айтып беріңізші">Толығырақ</button>
+            <button type="button" data-reply="Рақмет!">Рақмет!</button>
+          </div>
+
+          <form class="composer" id="messageForm">
+            <button class="attach-button" id="attachButton" type="button" title="Қосымша">＋</button>
+            <input id="messageInput" type="text"
+              placeholder="Хабарламаңызды жазыңыз..."
+              autocomplete="off" maxlength="1000">
+            <span class="composer-lock" title="Қауіпсіз байланыс">♧</span>
+            <button class="send-button" type="submit" aria-label="Жіберу">➤</button>
+          </form>
+          <div class="composer-hint">Enter — жіберу · Жеке деректерді чатқа жазбаңыз</div>
+        </div>
       </section>
 
-      <aside id="infoPanel" class="info-panel">
-        <div class="info-heading"><h3>Чат туралы</h3><button class="icon-button small-icon" id="closeInfoBtn" title="Жабу"><i class="fa-solid fa-xmark"></i></button></div>
-        <div id="infoContent"></div>
+      <aside class="info-panel" id="infoPanel">
+        <div class="info-top">
+          <span>ЧАТ АҚПАРАТЫ</span>
+          <button class="icon-button" id="closeInfo" type="button" title="Жабу">✕</button>
+        </div>
+        <div class="info-profile">
+          <div class="avatar info-avatar" id="infoAvatar">AI</div>
+          <h3 id="infoName">AI Bank</h3>
+          <p id="infoRole">Банк қызметі</p>
+          <span class="verified-label">✓ Расталған байланыс</span>
+        </div>
+        <div class="info-stat">
+          <span>Хабарламалар</span>
+          <strong id="infoMessages">0</strong>
+        </div>
+        <div class="info-stat">
+          <span>Оқылмаған</span>
+          <strong id="infoUnread">0</strong>
+        </div>
+        <div class="info-note">
+          <span>🔒</span>
+          <div>
+            <strong>Қауіпсіздік</strong>
+            <p>Құпиясөз бен SMS-кодтарды ешкімге жібермеңіз.</p>
+          </div>
+        </div>
       </aside>
     </section>
-    <footer class="app-footer"><span>© 2026 AI Bank Messenger</span><span><i class="fa-solid fa-circle-check"></i> Оқу жобасы · Демо режимі</span><span>Design Patterns in JavaScript</span></footer>
+
+    <footer class="page-footer">
+      <span>© 2026 AI BANK MESSENGER</span>
+      <span>Қауіпсіздік · Құпиялылық · Қолдау</span>
+    </footer>
   </main>
-</div>
-<div id="toast" class="toast" role="status"></div>
-<script src="script.js"></script>
+
+  <div class="toast" id="toast" role="status"></div>
+  <input type="file" id="fileInput" hidden>
+  <script src="script.js"></script>
 </body>
 </html>
