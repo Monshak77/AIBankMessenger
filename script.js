@@ -29,7 +29,7 @@ function makeMessage(id, sender, initials, text, time, mine = false, extra = {})
   return { id, sender, initials, text, time, mine, file: null, reactions: [], ...extra };
 }
 
-/* SINGLETON */
+
 class ChatService {
   static instance;
 
@@ -47,7 +47,7 @@ class ChatService {
 
   createDemoChats() {
     const data = [
-      // БҰРЫНҒЫ 10 ЧАТ
+     
       ["IT бөлімі", "IT", "blue", "IT бөлімі", true, true, [
         ["Әлихан Сәрсен", "ӘС", "Сәлем, команда! Бүгінгі жүйе жаңартуын талқылайық.", "09:15"],
         ["Дана Ермек", "ДЕ", "Жаңа интерфейсті дайындап қойдым.", "09:18"],
@@ -90,7 +90,7 @@ class ChatService {
         ["Акмарал Әкімші", "AA", "Барлығыңызға сәттілік!", "08:48", true]
       ]],
 
-      // ҚОСЫЛҒАН 10 БАНК ЧАТЫ
+     
       ["Клиенттерге қолдау", "ҚҚ", "blue", "Клиенттер қызметі", true, true, [
         ["Айдана Сәрсенова", "АС", "Сәлеметсіз бе! Картам бойынша сұрағым бар.", "09:15"],
         ["Акмарал Әкімші", "AA", "Сәлеметсіз бе! Қандай көмек қажет?", "09:17", true]
@@ -236,7 +236,7 @@ class ChatService {
   }
 }
 
-/* COMMAND */
+
 class SendCommand {
   constructor(service, text, file) {
     this.service = service;
@@ -266,7 +266,7 @@ class CommandInvoker {
   }
 }
 
-/* MEDIATOR */
+
 class ChatMediator {
   constructor(service, invoker) {
     this.service = service;
@@ -298,7 +298,7 @@ class ChatMediator {
   }
 }
 
-/* PROFILE */
+
 let profile = {
   name: "Акмарал",
   email: "admin@aibank.kz",
@@ -566,7 +566,7 @@ function renderAll() {
 
 service.subscribe(renderAll);
 
-/* CHAT LIST */
+
 if ($("chatList")) {
   $("chatList").addEventListener("click", e => {
     const item = e.target.closest("[data-chat-id]");
@@ -585,7 +585,7 @@ if ($("chatList")) {
   });
 }
 
-/* MESSAGE SENDING */
+
 if ($("messageForm")) {
   $("messageForm").addEventListener("submit", e => {
     e.preventDefault();
@@ -636,7 +636,7 @@ if ($("messageInput")) {
   });
 }
 
-/* SEARCH AND FILTERS */
+
 if ($("searchInput")) {
   $("searchInput").addEventListener("input", e => {
     chatSearch = e.target.value;
@@ -663,7 +663,7 @@ document.querySelectorAll(".department").forEach(b => b.onclick = () => {
   renderAll();
 });
 
-/* PIN CHAT */
+
 if ($("pinChatBtn")) {
   $("pinChatBtn").onclick = () => {
     mediator.pin(service.currentChat.id);
@@ -671,7 +671,7 @@ if ($("pinChatBtn")) {
   };
 }
 
-/* REACTIONS AND DELETE */
+
 if ($("messages")) {
   $("messages").addEventListener("click", e => {
     const b = e.target.closest("[data-action]");
@@ -690,7 +690,7 @@ if ($("messages")) {
   });
 }
 
-/* CREATE CHAT */
+
 if ($("newChatBtn")) {
   $("newChatBtn").onclick = () => {
     const name = prompt("Жаңа чаттың атауы:");
@@ -708,7 +708,7 @@ if ($("newChatBtn")) {
   };
 }
 
-/* MESSAGE SEARCH */
+
 function openMessageSearch() {
   if (!$("searchMessageBar") || !$("messageSearchInput")) return;
 
@@ -735,7 +735,7 @@ if ($("closeMessageSearch")) {
   };
 }
 
-/* CHAT INFO */
+
 if ($("chatInfoBtn")) {
   $("chatInfoBtn").onclick = () => {
     infoOpen = !infoOpen;
@@ -755,7 +755,7 @@ if ($("closeBannerBtn")) {
     $("chatBanner")?.classList.add("hidden");
 }
 
-/* QUICK REPLIES */
+
 document.querySelectorAll("[data-quick]").forEach(b => b.onclick = () => {
   if (!$("messageInput")) return;
 
@@ -777,7 +777,7 @@ if ($("emojiBtn")) {
   };
 }
 
-/* FILE ATTACHMENT */
+
 if ($("attachBtn")) {
   $("attachBtn").onclick = () => $("fileInput")?.click();
 }
@@ -804,7 +804,7 @@ if ($("fileInput")) {
   };
 }
 
-/* REFRESH AND NOTIFICATIONS */
+
 if ($("refreshBtn")) {
   $("refreshBtn").onclick = () => {
     renderAll();
@@ -827,7 +827,7 @@ if ($("addDepartmentBtn")) {
     showToast("Бөлімдер демо режимінде");
 }
 
-/* PROFILE MENU */
+
 function updateProfile() {
   const initials = profile.name.trim()
     .split(/\s+/).slice(0, 2)
@@ -961,7 +961,7 @@ function setupProfileMenu() {
   updateProfile();
 }
 
-/* KEYBOARD SHORTCUTS */
+
 document.addEventListener("keydown", e => {
   if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k") {
     e.preventDefault();
@@ -976,6 +976,6 @@ document.addEventListener("keydown", e => {
   }
 });
 
-/* START */
+
 setupProfileMenu();
 renderAll();
