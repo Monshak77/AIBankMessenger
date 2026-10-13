@@ -393,7 +393,7 @@
   </main>
 </div>
 
-<!-- ХАБАРЛАНДЫРУЛАР -->
+
 <div id="notificationPanel" class="popup-panel notification-panel hidden">
   <div class="popup-heading">
     <div><h3>Хабарландырулар</h3><p>Соңғы жаңалықтар мен ескертулер</p></div>
@@ -534,7 +534,7 @@
   const originalUpdateProfile = typeof updateProfile === "function" ? updateProfile : null;
   if (originalUpdateProfile) {
     const oldUpdateProfile = originalUpdateProfile;
-    // Алғашқы мәндерді көрсету үшін профильдегі ақпаратты оқимыз
+   
     const savedProfile = localStorage.getItem("aiBankDemoAccount");
     if (savedProfile) {
       try {
